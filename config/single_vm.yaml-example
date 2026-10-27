@@ -1,0 +1,60 @@
+# VM parameters
+vm:
+  gitea:
+    name: gitea
+    vmid: 8201
+    name_fqdn: gitea.example.org # <== change the FQDN for proper
+    disks:
+      scsi0:
+        size: 40
+        import_disk: "debian-13-genericcloud-amd64.qcow2"
+    cpu: 2
+    memory: 2048
+    networks:
+      net0:
+        bridge: vmbr0
+        ip: "192.168.0.201/24"  #  <== change the IP for proper
+        gateway: 192.168.0.1    #  <== change the GATEWAY for proper
+    dns:
+      server: 192.168.0.1       #  <== change the DNS SERVER for proper
+      domain: example.org       #  <== change the DNS SEARCH DOMAIN for proper
+    tags:
+      - debian
+      - gitea
+      - git
+      - debian-trixie
+      - docker
+    pool: infrastructure
+  gitea-runners:
+    name: gitea-runners
+    vmid: 8202
+    name_fqdn: gitea-runners.example.org   # <== change the FQDN for proper
+    disks:
+      scsi0:
+        size: 40
+        import_disk: "debian-13-genericcloud-amd64.qcow2"
+    cpu: 4
+    memory: 8192
+    networks:
+      net0:
+        bridge: vmbr0
+        ip: "192.168.0.202/24"  #  <== change the IP for proper
+        gateway: 192.168.0.1    #  <== change the GATEWAY for proper
+    dns:
+      server: 192.168.0.1       #  <== change the DNS SERVER for proper
+      domain: example.org       #  <== change the DNS SEARCH DOMAIN for proper
+    tags:
+      - debian
+      - gitea-runners
+      - debian-trixie
+      - docker
+    pool: infrastructure
+
+# Downloaded common cloud-init disks
+import_disks:
+  - name: "debian-13-genericcloud-amd64.qcow2"
+    import_url: "https://cdimage.debian.org/cdimage/cloud/trixie/latest/debian-13-genericcloud-amd64.qcow2"
+# Management user
+user:
+  name: gitea
+  ssh_key: ""                   #  <== place your PUBLIC SSH KEY here
